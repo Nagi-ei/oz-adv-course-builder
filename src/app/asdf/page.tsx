@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '../../lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -34,7 +34,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-background p-4'>
+    <div className='min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8'>
       <Card className='w-full max-w-md'>
         <CardHeader>
           <CardTitle className='text-2xl font-bold'>
@@ -70,12 +70,6 @@ export default function SignIn() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <Link
-              className='text-xs text-foreground underline'
-              href='/forgot-password'
-            >
-              Forgot Password?
-            </Link>
             <div>
               <Button type='submit' className='w-full'>
                 Sign in

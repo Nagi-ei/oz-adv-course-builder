@@ -1,0 +1,136 @@
+# Travel Course Builder App - Product Requirements Document (PRD)
+
+## Overview
+
+The Travel Course Builder app is a platform that allows users to create, explore, and share
+personalized travel itineraries with an interactive map interface. By integrating location-
+based services and user-friendly design, the app aims to enhance the travel planning
+experience.
+
+## Key Features
+
+1. User Management
+
+- Authentication:
+  - Login, Sign-up, Password recovery using Supabase Auth.
+- Profile Management: Users can manage their profiles with options to:
+  - Set favorite regions and themes.
+  - Enable dark mode.
+
+2. Map Features
+
+- Interactive Map:
+  - Map clustering for better visualization of multiple locations.
+  - Add favorites with notes directly on the map.
+  - Search for locations or attractions.
+  - Display travel courses on the map.
+
+3. Search and Explore
+
+- Search Results:
+  - Search for destinations and display results in a list format.
+  - View detailed information about a location by clicking on the list item.
+  - Redirect to the map from detailed views.
+
+4. Favorites Management
+
+- Favorites List:
+  - View saved locations in a list format.
+  - Access detailed information about saved locations.
+  - Redirect to the map from detailed views.
+
+5. Course Planning and Sharing
+
+- Course Planning:
+
+  - Add multiple locations to create a travel course.
+  - Integrate with schedules (if possible).
+  - Draw routes on the map (if feasible).
+
+- Course Recording (Optional):
+  - Upload photos of visited places.
+  - Extract location metadata from photos and display them on the map.
+  - Register visited places as part of a course.
+  - Sync with schedules and draw routes on the map (if feasible).
+
+## Technical Requirements
+
+1. Frontend:
+
+- Next.js
+- React@19
+- Redux
+- tanstack query
+
+2. Backend:
+
+- Supabase for authentication and database management.
+
+3. Deployment:
+
+- Vercel for hosting.
+
+4. APIs and Data Sources:
+
+- Geocoding Services:
+
+  - Use alternatives like South Korea’s Ministry of Land, Infrastructure, and Transport OpenAPI (free up to 40,000 requests/month) instead of Google Geocoding API due to cost constraints.
+
+- Tourism Data Sources:
+
+  - Public datasets from Korea’s data portal for attractions, restaurants, and accommodations.
+
+- Map APIs:
+  - Naver Maps API (free up to 200,000 requests/day).
+
+## Data Requirements
+
+1. Administrative location data:
+
+- Requires geocoding to convert addresses into coordinates (e.g., road names or lot numbers).
+
+2. Points of Interest (POI) data:
+
+- Tourist attractions, restaurants, accommodations from public datasets.
+
+## Screen Requirements
+
+| URL               | Path              | Description  | Authentication | Authorization                                              | Notes |
+| ----------------- | ----------------- | ------------ | -------------- | ---------------------------------------------------------- | ----- |
+| /sign-in          | Login screen      | Not required | Not required   | Uses Supabase Auth                                         |
+| /sign-up          | Sign-up screen    | Not required | Not required   | Uses Supabase Auth                                         |
+| /change-password  | Password recovery | Not required | Not required   | Uses Supabase Auth                                         |
+| /profile          | User profile      | Required     | Required       | Uses Supabase Auth                                         |
+| /map?q=...        | Interactive map   | Required     | Not required   | Features clustering, favorites with notes, course creation |
+| /favorites        | Favorites list    | Required     | Required       | View saved locations                                       |
+| /search?q=...     | Search results    | Not required | Not required   | Displays search results; redirects to map                  |
+| /places/:id       | Location details  | Not required | Not required   | Detailed information; redirects to map                     |
+| /course/planning  | Course planning   | Required     | Required       | Add locations to courses; integrate schedules; draw routes |
+| /course/recording | Course recording  | Required     | Required       | Upload photos; extract metadata; register visited places   |
+| /course/:id       | Course details    | Required     | Required       | View course information and routes                         |
+
+## Design Considerations
+
+1. Layout:
+
+- Mobile-first design is mandatory.
+- Support for tablets and desktops if possible.
+
+2. UI/UX:
+
+- Focus on intuitive navigation for travelers.
+- Allow customization options like dark mode.
+
+## Additional Ideas
+
+1. Social Features:
+
+- Enable users to share their courses publicly or with specific friends via links or social media platforms.
+
+2. Reviews & Ratings:
+
+- Allow users to rate destinations or courses and leave reviews for others to see.
+
+3. Offline Mode:
+
+- Provide offline access to saved courses or maps for areas with limited connectivity.
