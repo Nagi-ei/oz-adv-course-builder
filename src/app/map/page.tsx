@@ -77,5 +77,24 @@ export default function Map() {
   //   </div>
   // );
 
-  return <div>Map</div>;
+  // return <div>Map</div>;
+
+  useEffect(() => {
+    let map: naver.maps.Map;
+    const center: naver.maps.LatLng = new naver.maps.LatLng(
+      37.3595704,
+      127.105399
+    );
+
+    map = new naver.maps.Map('map', {
+      center: center,
+      zoom: 16,
+    });
+  }, []);
+
+  return (
+    <>
+      <div id='map' style={{ width: '100%', height: '400px' }}></div>
+    </>
+  );
 }

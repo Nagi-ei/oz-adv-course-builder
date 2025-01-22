@@ -36,7 +36,7 @@ importers:
         specifier: 10.4.20
         version: 10.4.20(postcss@8.4.49)
       class-variance-authority:
-        specifier: ^0.7.1
+        specifier: ^0.7.0
         version: 0.7.1
       clsx:
         specifier: ^2.1.1
@@ -66,6 +66,9 @@ importers:
       '@shadcn/ui':
         specifier: ^0.0.4
         version: 0.0.4
+      '@types/navermaps':
+        specifier: ^3.7.8
+        version: 3.7.8
       '@types/node':
         specifier: 22.10.2
         version: 22.10.2
@@ -79,7 +82,7 @@ importers:
         specifier: 8.4.49
         version: 8.4.49
       tailwind-merge:
-        specifier: ^2.6.0
+        specifier: ^2.5.2
         version: 2.6.0
       tailwindcss:
         specifier: 3.4.17
@@ -659,6 +662,12 @@ packages:
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+
+  '@types/geojson@7946.0.15':
+    resolution: {integrity: sha512-9oSxFzDCT2Rj6DfcHF8G++jxBKS7mBqXl5xrRW+Kbvjry6Uduya2iiwqHPhVXpasAVMBYKkEPGgKhd3+/HZ6xA==}
+
+  '@types/navermaps@3.7.8':
+    resolution: {integrity: sha512-LzQffMWcUfhKzOuPpUONaXmMN6sAkNf92q1nycRplqorIl2oDjgdPftOw0LttTS0/k/YsotizawK+PtcRWbuog==}
 
   '@types/node@22.10.2':
     resolution: {integrity: sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==}
@@ -2033,6 +2042,12 @@ snapshots:
       react: 19.0.0
 
   '@types/cookie@0.6.0': {}
+
+  '@types/geojson@7946.0.15': {}
+
+  '@types/navermaps@3.7.8':
+    dependencies:
+      '@types/geojson': 7946.0.15
 
   '@types/node@22.10.2':
     dependencies:
