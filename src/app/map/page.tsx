@@ -79,6 +79,9 @@ export default function Map() {
 
   // return <div>Map</div>;
 
+  const [map, setMap] = useState<naver.maps.Map | null>(null);
+  const [position, setPosition] = useState<any>(null);
+
   useEffect(() => {
     let map: naver.maps.Map;
     const center: naver.maps.LatLng = new naver.maps.LatLng(
@@ -90,11 +93,44 @@ export default function Map() {
       center: center,
       zoom: 16,
     });
+
+    setMap(map);
+
+    const getSuccess = (position: object) => {
+      console.log(position);
+      setPosition(position);
+    };
+
+    const getError = () => {
+      console.log('geolocation api error');
+    };
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000, // 5 seconds
+      maximumAge: 60000, // 1 minute
+    };
+
+    window.navigator.geolocation.getCurrentPosition(
+      getSuccess,
+      getError,
+      options
+    );
   }, []);
+
+  const handleClick = () => {
+    console.log(position.coords.latitude, position.coords.longitude);
+    map?.setCenter(
+      new naver.maps.LatLng(position.coords.latitude, position.coords.longitude)
+    );
+  };
 
   return (
     <>
       <div id='map' style={{ width: '100%', height: '400px' }}></div>
+      <button onClick={handleClick} className='bg-zinc-300 p-2 rounded-md'>
+        To Your Location
+      </button>
     </>
   );
 }
