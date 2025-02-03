@@ -1,11 +1,16 @@
 'use client';
 
-import NaverMap from '@/components/NaverMap';
+import NaverMap, { NaverMapMoveToCurrentLocation } from '@/components/NaverMap';
+import NaverMapContextProvider from '@/context/NaverMapContext';
 
 export default function Map() {
   return (
     <>
-      <NaverMap mapId='test_map' />
+      <NaverMapContextProvider>
+        <NaverMap mapId='test_map'>
+          <NaverMapMoveToCurrentLocation />
+        </NaverMap>
+      </NaverMapContextProvider>
     </>
   );
 }
