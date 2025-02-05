@@ -4,17 +4,16 @@ import Script from 'next/script';
 import React, { useContext, useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Button } from './ui/button';
-import {
-  NaverMapContext,
-  NaverMapContextProps,
-} from '@/context/NaverMapContext';
+import { useNaverMap } from '@/context/NaverMapContext';
+import { LocateFixed } from 'lucide-react';
 
+// 네이버 지도 컴포넌트
 export default function NaverMap({
   mapId,
   options = {
     zoom: 14,
     zoomControl: true,
-    // zoomControlOptions: { position: naver.maps.Position.TOP_RIGHT },
+    // zoomControlOptions: { position: naver.maps.Position.TOP_RIGHT }, // 여기선 naver가 정의되어 있지 않음
   },
   className = '',
   children,
@@ -24,11 +23,9 @@ export default function NaverMap({
   className?: string;
   children?: React.ReactNode;
 }) {
-  const { mapRef } = useContext(NaverMapContext) as NaverMapContextProps;
-  const [clickedCoord, setClickedCoord] = useState<naver.maps.LatLng | null>(
-    null
-  );
+  const { mapRef, setClickedCoord } = useNaverMap();
 
+  // 맵 옵션 객체 예시
   // {
   //   center: center,
   //   zoom: 14,
@@ -43,6 +40,7 @@ export default function NaverMap({
     map = new naver.maps.Map(mapId, options);
     mapRef.current = map;
 
+    // 클릭 장소 좌표 저장
     map.addListener('click', (e) => {
       console.log(e.coord);
       setClickedCoord(e.coord);
@@ -61,7 +59,7 @@ export default function NaverMap({
     <>
       <Script
         // strategy='beforeInteractive'
-        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`}
+        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&submodules=geocoder`}
         onLoad={createMap}
       />
       <div
@@ -71,18 +69,25 @@ export default function NaverMap({
       >
         {children}
       </div>
-
-      {clickedCoord && <div>{clickedCoord.toString()}</div>}
     </>
   );
 }
 
-export function NaverMapMoveToCurrentLocation() {
-  const { mapRef, userLocation, setUserLocation } = useContext(
-    NaverMapContext
-  ) as NaverMapContextProps;
+// 클릭 좌표 표시 (마커)
+export function ClickedCoordMap() {
+  const { mapRef, clickedCoord, setClickedCoord } = useNaverMap();
+
+  GetAddress(clickedCoord);
+
+  return clickedCoord ? <div>{clickedCoord.toString()}</div> : null;
+}
+
+// 현재 위치로 이동 버튼
+export function ToCurrentLocation() {
+  const { mapRef, userLocation, setUserLocation } = useNaverMap();
 
   const getSuccess = (position: GeolocationPosition) => {
+    console.log('현재 위치 받아오기 성공');
     console.log(position.coords.latitude, position.coords.longitude);
     const locationCoords = new naver.maps.LatLng(
       position.coords.latitude,
@@ -119,10 +124,42 @@ export function NaverMapMoveToCurrentLocation() {
   return (
     <Button
       onClick={moveToCurrentLocation}
-      className='absolute bottom-2 left-2 z-10'
+      className='absolute bottom-2 left-2 z-10 p-2 rounded-full'
     >
-      To Current Location
+      <LocateFixed />
     </Button>
+  );
+}
+
+// 좌표 -> 주소 변환
+function GetAddress(coords: naver.maps.LatLng | null) {
+  if (!coords) {
+    return;
+  }
+
+  naver.maps.Service.reverseGeocode(
+    {
+      coords,
+      orders: [
+        naver.maps.Service.OrderType.ADDR,
+        naver.maps.Service.OrderType.ROAD_ADDR,
+      ].join(','),
+    },
+    (stat, res) => {
+      if (stat !== naver.maps.Service.Status.OK) {
+        return new Error('주소 변환 실패');
+      }
+
+      const result = res.v2; // 받아온 결과 안에 v2 하나 있음
+      // const items = result.results; // 주소 각 요소 따로 찾을 수 있음
+      const jibunAddress = result.address.jibunAddress;
+      const roadAddress = result.address.roadAddress;
+
+      console.log(jibunAddress);
+      console.log(roadAddress);
+
+      return { jibunAddress, roadAddress };
+    }
   );
 }
 
@@ -130,5 +167,4 @@ export function NaverMapMoveToCurrentLocation() {
 // 흠, 그럼 Next.js의 Script 태그에서 로드한 객체도 같은건가?
 
 // 마커 (좌표 디스플레이)
-// 좌표 -> 주소 변환
 // 마커 클러스터링
