@@ -170,7 +170,6 @@ function InfoWindow({
   });
 
   naver.maps.Event.addListener(infoWindow, 'click', (e) => {
-    console.log('infoWindow click');
     infoWindow.close();
   });
 

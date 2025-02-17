@@ -1,10 +1,5 @@
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { FormMessage, Message } from '@/components/form-message';
+import { SubmitButton } from '@/components/submit-button';
 import {
   Card,
   CardContent,
@@ -12,85 +7,61 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { Label } from '@radix-ui/react-label';
 import Link from 'next/link';
+import { signInAction } from './action';
 
-export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const router = useRouter();
-
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      if (error) throw error;
-      router.push('/map');
-    } catch (error) {
-      console.error('Error signing in:', error);
-    }
-  };
+export default async function SignInPage(props: {
+  searchParams: Promise<Message>;
+}) {
+  const searchParams = await props.searchParams;
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-background p-4'>
-      <Card className='w-full max-w-md'>
+    <div className={cn('flex flex-col gap-6 w-full')}>
+      <Card>
         <CardHeader>
-          <CardTitle className='text-2xl font-bold'>
-            Sign in to your account
-          </CardTitle>
-          <CardDescription>
-            Enter your email and password to sign in
-          </CardDescription>
+          <CardTitle className='text-2xl'>로그인</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSignIn} className='space-y-4'>
-            <div>
-              <Input
-                id='email-address'
-                name='email'
-                type='email'
-                autoComplete='email'
-                required
-                placeholder='Email address'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+          <form>
+            <div className='flex flex-col gap-6'>
+              <div className='grid gap-2'>
+                <Label htmlFor='email'>이메일</Label>
+                <Input
+                  id='email'
+                  name='email'
+                  type='email'
+                  placeholder='m@example.com'
+                  required
+                />
+              </div>
+              <div className='grid gap-2'>
+                <div className='flex items-center'>
+                  <Label htmlFor='password'>비밀번호</Label>
+                  <a
+                    href='/forgot-password'
+                    className='ml-auto inline-block text-sm underline-offset-4 hover:underline'
+                    tabIndex={-1}
+                  >
+                    비밀번호를 잊으셨나요?
+                  </a>
+                </div>
+                <Input id='password' name='password' type='password' required />
+              </div>
+              <SubmitButton className='w-full' formAction={signInAction}>
+                로그인
+              </SubmitButton>
             </div>
-            <div>
-              <Input
-                id='password'
-                name='password'
-                type='password'
-                autoComplete='current-password'
-                required
-                placeholder='Password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <Link
-              className='text-xs text-foreground underline'
-              href='/forgot-password'
-            >
-              Forgot Password?
-            </Link>
-            <div>
-              <Button type='submit' className='w-full'>
-                Sign in
-              </Button>
-            </div>
-            <p className='text-sm text-foreground'>
-              Don't have an account?{' '}
-              <Link
-                className='text-foreground font-medium underline'
-                href='/sign-up'
-              >
-                Sign up
+            <div className='mt-4 text-center text-sm'>
+              계정이 없으신가요?
+              <Link href='/sign-up' className='underline underline-offset-4'>
+                회원가입
               </Link>
-            </p>
+            </div>
           </form>
+          <FormMessage message={searchParams} />
         </CardContent>
       </Card>
     </div>

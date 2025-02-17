@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import { BottomNav } from '../components/bottom-nav';
 import { Metadata } from 'next';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           <main className='min-h-screen'>{children}</main>
           <BottomNav />
         </Providers>
+        <Toaster />
       </body>
     </html>
   );
