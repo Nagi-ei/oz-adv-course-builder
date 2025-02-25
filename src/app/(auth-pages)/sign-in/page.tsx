@@ -1,17 +1,11 @@
 import { FormMessage, Message } from '@/components/form-message';
 import { SubmitButton } from '@/components/submit-button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@radix-ui/react-label';
+import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { signInAction } from './action';
+import { signInAction } from '@/app/actions';
 
 export default async function SignInPage(props: {
   searchParams: Promise<Message>;

@@ -1,4 +1,9 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import { User as UserIcon } from 'lucide-react';
+import { usePostApi } from '@/context/PostApiContext';
+import { useParams } from 'next/navigation';
 
 type Comment = {
   postId: number;
@@ -8,16 +13,31 @@ type Comment = {
   body: string;
 };
 
-// Dynamic Route
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+type Comments = Comment[];
 
-  const posts = await fetch(`http://localhost:3000/api/favorites/${id}`);
-  const { post, user, comments } = await posts.json();
+// Dynamic Route
+export default function Page() {
+  const { id } = useParams<{ id: string }>();
+  const { posts, users } = usePostApi();
+  const [comments, setComments] = useState<Comments>([]);
+
+  const post = posts.find((post) => post.id === parseInt(id));
+  const user = users.find((user) => user.id === post?.userId);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const allComments = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${id}/comments`
+      );
+      const comments = await allComments.json();
+      setComments(comments);
+    };
+    fetchComments();
+  }, [id]);
+
+  if (!post || !user || !comments) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main className='p-4 pb-20'>

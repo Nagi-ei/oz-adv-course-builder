@@ -176,7 +176,8 @@ function InfoWindow({
   naver.maps.Event.addListener(mapRef.current, 'click', (e) => {
     if (infoWindow.getMap()) {
       infoWindow.close();
-    } else {
+    }
+    if (mapRef.current) {
       infoWindow.open(mapRef.current, e.coord);
     }
   });
