@@ -1,9 +1,9 @@
 'use client';
 
 import PostCard from './PostCard';
-import { Post, usePostApi, User } from '@/context/PostApiContext';
-
-export default function Favorites() {
+import { usePostApi } from '@/context/PostApiContext';
+import { Post } from '@/app/types/posts';
+export default function Posts() {
   const { posts, users } = usePostApi();
   console.log(posts, users);
 

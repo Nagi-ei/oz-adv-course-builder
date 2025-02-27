@@ -3,14 +3,14 @@
 import { fetchPosts } from '@/lib/fetch';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-export type Post = {
+type Post = {
   id: number;
   userId: number;
   title: string;
   body: string;
 };
 
-export type User = {
+type User = {
   id: number;
   name: string;
   username: string;
@@ -34,9 +34,9 @@ export type User = {
   };
 };
 
-export type Posts = Post[];
+type Posts = Post[];
 
-export type Users = User[];
+type Users = User[];
 
 type PostApiContextProps = {
   posts: Posts;

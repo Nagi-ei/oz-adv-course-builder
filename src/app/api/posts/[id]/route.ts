@@ -1,4 +1,4 @@
-import { User } from '@/context/PostApiContext';
+import { User } from '@/app/types/posts';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
@@ -18,6 +18,8 @@ export async function GET(
       fetch(`${USERS_ENDPOINT}`).then((res) => res.json()),
       fetch(`${COMMENTS_ENDPOINT}`).then((res) => res.json()),
     ]);
+
+    // 404 처리하려면 위에서 한방에 .json하지 말고 여기서 response.ok 확인하기
 
     if (!post || !users || !comments) {
       throw new Error('Failed to fetch data');

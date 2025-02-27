@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Post, User } from '@/context/PostApiContext';
+import { Post, User } from '@/app/types/posts';
 
 export default function PostCard({
   post,
@@ -16,7 +16,7 @@ export default function PostCard({
       className='border cursor-pointer hover:bg-gray-100 transition-all ease-in duration-150 border-gray-300 rounded-md'
     >
       <Link
-        href={`/favorites/${post.id}`}
+        href={`/posts/${post.id}`}
         className='flex gap-4 items-center justify-between p-4'
       >
         <span className='text-sm text-gray-500'>{post.id}</span>

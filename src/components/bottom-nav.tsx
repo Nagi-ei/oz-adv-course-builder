@@ -2,14 +2,21 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Map, Compass, Heart, User, File } from 'lucide-react';
+import {
+  Search,
+  Map,
+  User,
+  File,
+  ShoppingCart,
+  NotebookPen,
+} from 'lucide-react';
 
 const navItems = [
   { name: 'Search', href: '/', icon: Search },
   { name: 'Map', href: '/map', icon: Map },
-  { name: 'Course', href: '/course', icon: Compass },
-  { name: 'Favorites', href: '/favorites', icon: Heart },
-  { name: 'Memo', href: '/memo', icon: File },
+  { name: 'Products', href: '/products', icon: ShoppingCart },
+  { name: 'Posts', href: '/posts', icon: File },
+  { name: 'Memo', href: '/memo', icon: NotebookPen },
   { name: 'Profile', href: '/profile', icon: User },
 ];
 

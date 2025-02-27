@@ -11,6 +11,8 @@ export async function GET() {
       fetch(POSTS_ENDPOINT).then((res) => res.json()),
     ]);
 
+    // 404 처리하려면 위에서 한방에 .json하지 말고 여기서 response.ok 확인하기
+
     if (!users || !posts) {
       throw new Error('Failed to fetch data');
     }
