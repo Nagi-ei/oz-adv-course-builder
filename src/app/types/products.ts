@@ -34,3 +34,10 @@ export type Review = {
   reviewerEmail: string;
   reviewerName: string;
 };
+
+export type DummyResponse = {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
+};

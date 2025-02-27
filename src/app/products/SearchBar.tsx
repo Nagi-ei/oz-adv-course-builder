@@ -2,16 +2,27 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 export default function SearchBar() {
+  // const [query, setQuery] = useState<string>('');
+  const router = useRouter();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.currentTarget.search.value);
-    // 검색어를 쿼리 파라미터로해서 (정규표현식을 거쳐서) 네비게이트?
+    const query = e.currentTarget.search.value;
+    if (!query) {
+      router.push('/products');
+      return;
+    }
+    // 정규표현식도 나중에
+    router.push(`/products?query=${query}`);
   };
 
   // 디바운스니 이런건 나중에...
+
+  // 이렇게 아무것도 구현 안해놓으면 굳이 클라이언트 컴포넌트일 필요가 없는듯
 
   return (
     <form onSubmit={handleSubmit} className='flex gap-2'>
