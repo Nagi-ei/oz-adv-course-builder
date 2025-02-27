@@ -1,5 +1,3 @@
-import { DummyResponse, Product } from '../types/products';
-import ProductCard from './ProductCard';
 import SearchBar from './SearchBar';
 import PaginationComponent from './Pagenation';
 import { SelectComponent } from './Select';
@@ -21,7 +19,6 @@ export default async function Layout({
       <SearchBar />
       <SelectComponent categories={categories} />
       {children}
-      <PaginationComponent />
     </main>
   );
 }
