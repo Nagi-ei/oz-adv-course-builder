@@ -10,11 +10,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useRouter } from 'next/navigation';
 
 export function SelectComponent({ categories }: { categories: string[] }) {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  // const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const router = useRouter();
+
   const handleChange = (value: string) => {
-    setSelectedCategory(value);
+    console.log(value);
+    router.push(`/products/${value}`);
   };
 
   return (

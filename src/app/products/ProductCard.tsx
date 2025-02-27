@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default async function ProductCard({ product }: { product: Product }) {
   return (
     <li className='flex flex-col gap-2 border border-gray-200 rounded-md w-60 hover:bg-gray-100 transition-all duration-150'>
-      <Link href={`/products/${product.id}`} className='p-4'>
+      <Link href={`/product/${product.id}`} className='p-4'>
         <Image
           src={product.thumbnail}
           alt={product.title}
